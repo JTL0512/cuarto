@@ -78,9 +78,6 @@ btnEntrar.addEventListener("click",()=>{
     );
 
     window.location.href =
-    "bienvenida.html";
+    "bienvenida2.html";
 
 });
-
-window.location.href =
-"bienvenida2.html";

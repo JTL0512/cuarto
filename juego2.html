@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>Juego 2</title>
+
+<link rel="stylesheet"
+href="css/juego2.css">
+
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+
+</head>
+
+<body>
+
+<!-- VIDEO -->
+
+<video
+id="videoFondo"
+autoplay
+muted
+loop
+playsinline>
+
+<source
+src="videos/fondo.mp4"
+type="video/mp4">
+
+</video>
+
+<!-- VIDAS -->
+
+<div id="vidas">
+
+❤️❤️❤️
+
+</div>
+
+<!-- PUNTAJE -->
+
+<div id="puntaje">
+
+⭐ 0
+
+</div>
+
+<!-- TITULO -->
+
+<h1>
+
+📈 Juego 2
+
+</h1>
+
+<p class="instruccion">
+
+Arrastra los números para ordenarlos de menor a mayor
+
+</p>
+
+<!-- NUMEROS -->
+
+<div
+class="numeros"
+id="numeros">
+
+</div>
+
+<!-- ZONAS -->
+
+<div class="zonas">
+
+<div
+class="zona">
+
+1°
+
+</div>
+
+<div
+class="zona">
+
+2°
+
+</div>
+
+<div
+class="zona">
+
+3°
+
+</div>
+
+<div
+class="zona">
+
+4°
+
+</div>
+
+</div>
+
+<!-- MENSAJE -->
+
+<div id="mensaje">
+
+</div>
+
+<!-- BOTONES -->
+
+<button id="verificar">
+
+✅ Verificar
+
+</button>
+
+<button id="btnSiguiente">
+
+🎮 Juego 3
+
+</button>
+
+<!-- AUDIOS -->
+
+<audio
+id="correcto"
+src="sonidos/correcto.mp3">
+
+</audio>
+
+<audio
+id="incorrecto"
+src="sonidos/incorrecto.mp3">
+
+</audio>
+
+<script src="js/juego2.js"></script>
+
+</body>
+
+</html>
