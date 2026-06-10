@@ -1,90 +1,74 @@
-<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Juego 6 - Supermercado Matemático</title>
 
 <link rel="stylesheet" href="css/juego6.css">
+
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
 
 </head>
 
 <body>
 
-<video id="videoFondo" autoplay muted loop playsinline>
+<div id="vidas">❤️❤️❤️</div>
 
-<source src="videos/fondo.mp4" type="video/mp4">
+<div id="puntaje">⭐ 0</div>
 
-</video>
-
-<div id="overlay"></div>
-
-<!-- VIDAS -->
-
-<div id="vidas">
-
-❤️❤️❤️
-
-</div>
-
-<!-- PUNTAJE -->
-
-<div id="puntaje">
-
-⭐ 0
-
-</div>
-
-<!-- BARRA PROGRESO -->
-
-<div id="barraContenedor">
+<div id="barraContainer">
 
 <div id="barra">
 
+<div id="progreso"></div>
+
 <img
-src="img/carrito.png"
-id="carrito">
-
-<div id="meta">
-
-🏁
+id="carritoBarra"
+src="img/carrito.png">
 
 </div>
 
-</div>
-
-<div id="porcentaje">
-
-0%
+<div class="meta">🏁</div>
 
 </div>
 
-</div>
+<div id="pantallaInicio">
 
-<!-- TITULO -->
+<h1>🛒 Supermercado Matemático</h1>
 
-<h1>
+<p>
 
-🛒 Supermercado Inteligente
+Acompáñame en esta aventura dentro del supermercado.
 
-</h1>
+Resolverás desafíos matemáticos usando precios,
+sumas, restas y comparaciones.
 
-<p id="descripcion">
-
-Completa las misiones y llena tu carrito.
+¡Llena tu carrito y completa todas las misiones!
 
 </p>
 
-<!-- CONTENIDO -->
+<button id="btnComenzar">
 
-<div id="contenido">
+🚀 Comenzar aventura
 
-</div>
-
-<!-- MENSAJE -->
-
-<div id="mensaje">
+</button>
 
 </div>
 
-<!-- BOTONES -->
+<div id="juego" style="display:none;">
 
-<div id="botones">
+<h2 id="tituloMision">
+
+Misión 1
+
+</h2>
+
+<div id="contenidoMision"></div>
+
+<div id="mensaje"></div>
 
 <button id="verificar">
 
@@ -92,33 +76,18 @@ Completa las misiones y llena tu carrito.
 
 </button>
 
-<button id="siguiente">
+<button id="btnFinal">
 
-➡️ Siguiente misión
+🏆 Finalizar Juego
 
 </button>
 
 </div>
 
-<!-- AUDIOS -->
-
-<audio
-id="correcto"
-src="sonidos/correcto.mp3">
-</audio>
-
-<audio
-id="incorrecto"
-src="sonidos/incorrecto.mp3">
-</audio>
-
-<audio
-id="victoria"
-src="sonidos/victoria.mp3">
-</audio>
+<audio id="correcto" src="sonidos/correcto.mp3"></audio>
+<audio id="incorrecto" src="sonidos/incorrecto.mp3"></audio>
 
 <script src="js/juego6.js"></script>
 
 </body>
-
 </html>

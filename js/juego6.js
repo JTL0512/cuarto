@@ -1,360 +1,301 @@
-const contenido =
-document.getElementById("contenido");
+const puntajeDiv = document.getElementById("puntaje");
+const vidasDiv = document.getElementById("vidas");
+const mensaje = document.getElementById("mensaje");
+const contenido = document.getElementById("contenidoMision");
+const titulo = document.getElementById("tituloMision");
+const progreso = document.getElementById("progreso");
+const carrito = document.getElementById("carritoBarra");
 
-const mensaje =
-document.getElementById("mensaje");
+const correcto = document.getElementById("correcto");
+const incorrecto = document.getElementById("incorrecto");
 
-const verificar =
-document.getElementById("verificar");
+function hablar(texto){
 
-const siguiente =
-document.getElementById("siguiente");
+    speechSynthesis.cancel();
 
-const puntajeDiv =
-document.getElementById("puntaje");
+    const voz =
+    new SpeechSynthesisUtterance(texto);
 
-const vidasDiv =
-document.getElementById("vidas");
+    voz.lang = "es-CL";
 
-const carrito =
-document.getElementById("carrito");
+    voz.rate = 0.95;
 
-const porcentaje =
-document.getElementById("porcentaje");
+    voz.pitch = 1;
 
-const correcto =
-document.getElementById("correcto");
+    speechSynthesis.speak(voz);
 
-const incorrecto =
-document.getElementById("incorrecto");
+}
 
-const victoria =
-document.getElementById("victoria");
+window.addEventListener("load",()=>{
+
+    const btnComenzar =
+    document.getElementById("btnComenzar");
+
+    // Ocultar botón al inicio
+    btnComenzar.style.display = "none";
+
+    const texto =
+    "Bienvenido al supermercado matemático. Acompáñame en esta aventura dentro del supermercado. Resolverás desafíos matemáticos usando precios, sumas, restas y comparaciones. Llena tu carrito y completa todas las misiones.";
+
+    const voz =
+    new SpeechSynthesisUtterance(texto);
+
+    voz.lang = "es-CL";
+    voz.rate = 0.95;
+    voz.pitch = 1;
+
+    // Cuando termine de hablar aparece el botón
+voz.onend = () => {
+
+    btnComenzar.style.display =
+    "inline-block";
+
+    setTimeout(()=>{
+
+        btnComenzar.classList.add(
+        "mostrar"
+        );
+
+    },100);
+
+};
+
+    speechSynthesis.speak(voz);
+
+});
 
 let puntaje =
-parseInt(
-localStorage.getItem("puntaje")
-) || 0;
+parseInt(localStorage.getItem("puntaje")) || 0;
 
 let vidas = 3;
-
 let mision = 0;
+let seleccion = "";
 
-let respuestaUsuario = "";
-
-puntajeDiv.textContent =
-"⭐ " + puntaje;
+puntajeDiv.textContent = "⭐ " + puntaje;
 
 const misiones = [
 
 {
-titulo:
-"¿Cuál es el producto más barato?",
-
+titulo:"Misión 1",
+pregunta:"¿Cuál producto es más barato?",
+correcta:"platano",
 productos:[
-{
-img:"img/manzana.png",
-nombre:"Manzana",
-precio:1500
-},
-{
-img:"img/platano.png",
-nombre:"Plátano",
-precio:1000
-},
-{
-img:"img/naranja.png",
-nombre:"Naranja",
-precio:2000
-}
-],
-
-correcta:
-"Plátano"
+["manzana","$1500"],
+["platano","$1000"],
+["naranja","$2000"]
+]
 },
 
 {
-titulo:
-"¿Cuál es el producto más caro?",
-
+titulo:"Misión 2",
+pregunta:"¿Cuál producto cuesta menos?",
+correcta:"jugo",
 productos:[
-{
-img:"img/leche.png",
-nombre:"Leche",
-precio:1800
-},
-{
-img:"img/pan.png",
-nombre:"Pan",
-precio:1200
-},
-{
-img:"img/huevos.png",
-nombre:"Huevos",
-precio:2500
-}
-],
-
-correcta:
-"Huevos"
+["leche","$2500"],
+["jugo","$1500"],
+["queso","$3000"]
+]
 },
 
 {
-titulo:
-"Tienes $5000. ¿Te alcanza?",
-
-texto:
-"Pan $1500 + Leche $1200 + Huevos $2000",
-
-opciones:[
-"SI",
-"NO"
-],
-
-correcta:
-"SI"
-},
-
-{
-titulo:
-"¿Qué oferta conviene más?",
-
-texto:
-"Jugo 1L = $1500 | Jugo 2L = $2300",
-
-opciones:[
-"Jugo 1L",
-"Jugo 2L"
-],
-
-correcta:
-"Jugo 2L"
-},
-
-{
-titulo:
-"¿Qué producto cuesta menos?",
-
+titulo:"Misión 3",
+pregunta:"¿Qué producto cuesta menos?",
+correcta:"pan",
 productos:[
-{
-img:"img/manzana.png",
-nombre:"Manzana",
-precio:1800
+["pan","$2000"],
+["cereal","$3500"],
+["huevos","$2800"]
+]
 },
-{
-img:"img/pan.png",
-nombre:"Pan",
-precio:1200
-},
-{
-img:"img/leche.png",
-nombre:"Leche",
-precio:2200
-}
-],
 
-correcta:
-"Pan"
+{
+titulo:"Misión 4",
+pregunta:"¿Cuál es el precio menor?",
+correcta:"yogurt",
+productos:[
+["yogurt","$1800"],
+["bebida","$2500"],
+["galletas","$2200"]
+]
+},
+
+{
+titulo:"Misión 5",
+pregunta:"Tienes $10000. Compras Leche($2500), Pan($2000), Jugo($1500) y Queso($2000). ¿Cuánto sobra?",
+correcta:"2000",
+opciones:["1500","2000","2500","3000"]
 }
 
 ];
 
-cargarMision();
+document
+.getElementById("btnComenzar")
+.addEventListener("click",()=>{
 
-/* CARGAR MISION */
+    document.getElementById(
+    "pantallaInicio"
+    ).style.display="none";
+
+    document.getElementById(
+    "juego"
+    ).style.display="block";
+
+    cargarMision();
+
+});
+
 
 function cargarMision(){
 
-respuestaUsuario = "";
+const actual = misiones[mision];
+
+titulo.textContent = actual.titulo;
+
+contenido.innerHTML = "";
 
 mensaje.textContent = "";
 
-siguiente.style.display =
-"none";
-
-let actual =
-misiones[mision];
-
-contenido.innerHTML =
-`<h2 style="width:100%;margin-bottom:30px;">
-${actual.titulo}
-</h2>`;
+seleccion = "";
 
 if(actual.productos){
 
-actual.productos.forEach(
-producto=>{
-
-contenido.innerHTML +=
-
-`
-<div
-class="tarjeta opcion"
-data-respuesta="${producto.nombre}">
-
-<img
-src="${producto.img}">
-
-<div class="nombre">
-
-${producto.nombre}
-
+contenido.innerHTML = `
+<div class="tarjeta">
+<h3>${actual.pregunta}</h3>
+<div class="productos">
+${actual.productos.map(p=>`
+<div class="producto"
+onclick="seleccionar('${p[0]}',this)">
+<img src="img/${p[0]}.png">
+<p>${p[1]}</p>
 </div>
-
-<div class="precio">
-
-$${producto.precio}
-
+`).join("")}
 </div>
-
 </div>
 `;
 
-});
+}else{
+
+contenido.innerHTML = `
+<div class="tarjeta">
+<h3>${actual.pregunta}</h3>
+<div class="productos">
+${actual.opciones.map(op=>`
+<div class="producto"
+onclick="seleccionar('${op}',this)">
+<p>${op}</p>
+</div>
+`).join("")}
+</div>
+</div>
+`;
 
 }
 
-if(actual.texto){
+}
 
-contenido.innerHTML +=
+function seleccionar(valor,elemento){
 
-`
-<div
-class="tarjeta"
-style="width:500px">
+seleccion = valor;
 
-<div class="nombre">
+document
+.querySelectorAll(".producto")
+.forEach(p=>{
 
-${actual.texto}
-
-</div>
-
-</div>
-`;
-
-actual.opciones.forEach(
-op=>{
-
-contenido.innerHTML +=
-
-`
-<div
-class="opcion"
-data-respuesta="${op}">
-
-${op}
-
-</div>
-`;
+p.style.border="2px solid cyan";
 
 });
+
+elemento.style.border=
+"4px solid lime";
 
 }
 
 document
-.querySelectorAll(".opcion")
-.forEach(op=>{
+.getElementById("verificar")
+.addEventListener("click",()=>{
 
-op.addEventListener(
-"click",
-()=>{
+if(seleccion==="") return;
 
-document
-.querySelectorAll(".opcion")
-.forEach(o=>{
+const actual = misiones[mision];
 
-o.style.border =
-"none";
+if(seleccion===actual.correcta){
 
-});
-
-op.style.border =
-"4px solid yellow";
-
-respuestaUsuario =
-op.dataset.respuesta;
-
-});
-
-});
-
-actualizarBarra();
-
-}
-
-/* VERIFICAR */
-
-verificar.addEventListener(
-"click",
-()=>{
-
-if(
-respuestaUsuario === ""
-){
-
-alert(
-"Selecciona una respuesta"
-);
-
-return;
-
-}
-
-let correcta =
-misiones[mision].correcta;
-
-if(
-respuestaUsuario ===
-correcta
-){
-
-mensaje.textContent =
-"🎉 ¡Correcto!";
-
-mensaje.className =
-"correcto";
-
-correcto.play();
-
-puntaje += 20;
+puntaje+=20;
 
 localStorage.setItem(
 "puntaje",
 puntaje
 );
 
-puntajeDiv.textContent =
-"⭐ " + puntaje;
+puntajeDiv.textContent=
+"⭐ "+puntaje;
+
+mensaje.textContent=
+"🎉 ¡Correcto!";
+
+mensaje.className=
+"correcto";
+
+correcto.play();
 
 confetti({
-
-particleCount:150,
-spread:120
-
+particleCount:200,
+spread:150
 });
 
-siguiente.style.display =
+mision++;
+
+const porcentaje =
+(mision/5)*100;
+
+progreso.style.width=
+porcentaje+"%";
+
+carrito.style.left=
+`calc(${porcentaje}% - 30px)`;
+
+if(mision===5){
+
+document
+.getElementById("btnFinal")
+.style.display=
 "inline-block";
 
+document
+.getElementById("verificar")
+.style.display=
+"none";
+
+mensaje.textContent=
+"🏆 ¡Supermercado completado!";
+
+return;
+
 }
-else{
+
+setTimeout(
+cargarMision,
+1200
+);
+
+}else{
 
 vidas--;
 
-vidasDiv.textContent =
-
+vidasDiv.textContent=
 "❤️".repeat(vidas)+
 "🤍".repeat(3-vidas);
 
-mensaje.textContent =
+mensaje.textContent=
 "❌ Incorrecto";
 
-mensaje.className =
+mensaje.className=
 "incorrecto";
 
 incorrecto.play();
 
-if(vidas <= 0){
+if(vidas<=0){
 
 alert(
 "Te quedaste sin vidas"
@@ -368,122 +309,11 @@ location.reload();
 
 });
 
-/* SIGUIENTE */
+document
+.getElementById("btnFinal")
+.addEventListener("click",()=>{
 
-siguiente.addEventListener(
-"click",
-()=>{
-
-mision++;
-
-if(
-mision >= misiones.length
-){
-
-finalJuego();
-
-return;
-
-}
-
-cargarMision();
+window.location.href=
+"final.html";
 
 });
-
-/* BARRA */
-
-function actualizarBarra(){
-
-let progreso =
-
-(mision /
-misiones.length)
-*100;
-
-porcentaje.textContent =
-
-Math.round(
-progreso
-) + "%";
-
-carrito.style.left =
-
-`calc(${progreso}% - 35px)`;
-
-}
-
-/* FINAL */
-
-function finalJuego(){
-
-victoria.play();
-
-confetti({
-
-particleCount:500,
-spread:180
-
-});
-
-contenido.innerHTML =
-
-`
-<div class="final">
-
-<h2>
-
-🎉 FELICITACIONES 🎉
-
-</h2>
-
-<br>
-
-<div class="estrellas">
-
-⭐⭐⭐
-
-</div>
-
-<br>
-
-<h3>
-
-Completaste todas las compras
-
-</h3>
-
-<br>
-
-<h2>
-
-⭐ ${puntaje}
-
-</h2>
-
-<br>
-
-<button
-onclick="window.location.href='todos.html'">
-
-🏠 Volver al menú
-
-</button>
-
-</div>
-`;
-
-verificar.style.display =
-"none";
-
-siguiente.style.display =
-"none";
-
-mensaje.textContent = "";
-
-porcentaje.textContent =
-"100%";
-
-carrito.style.left =
-"calc(100% - 70px)";
-
-}

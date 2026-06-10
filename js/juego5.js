@@ -1,8 +1,11 @@
-const puntajeDiv =
-document.getElementById("puntaje");
+const problema =
+document.getElementById("problema");
 
-const vidasDiv =
-document.getElementById("vidas");
+const respuestasDiv =
+document.getElementById("respuestas");
+
+const zona =
+document.getElementById("zonaRespuesta");
 
 const mensaje =
 document.getElementById("mensaje");
@@ -13,41 +16,98 @@ document.getElementById("correcto");
 const incorrecto =
 document.getElementById("incorrecto");
 
-let puntaje =
-parseInt(
-localStorage.getItem("puntaje")
-) || 0;
+const puntajeDiv =
+document.getElementById("puntaje");
 
-let vidas = 3;
+const vidasDiv =
+document.getElementById("vidas");
+
+let puntaje =
+parseInt(localStorage.getItem("puntaje")) || 0;
 
 puntajeDiv.textContent =
 "⭐ " + puntaje;
 
-document
-.querySelectorAll(".item")
-.forEach(item=>{
+let vidas = 3;
 
-item.addEventListener(
+let respuestaCorrecta = 0;
+
+const misiones = [
+
+{
+texto:"🧃 Un jugo cuesta $1200 y una galleta $800. ¿Cuánto es en total?",
+correcta:2000,
+opciones:[2000,1800,2500,1500]
+},
+
+{
+texto:"🍎 Una manzana cuesta $1500 y una naranja $1000. ¿Cuánto es en total?",
+correcta:2500,
+opciones:[2500,3000,2000,3500]
+},
+
+{
+texto:"🥛 Tienes $5000 y compras leche por $2500. ¿Cuánto dinero te queda?",
+correcta:2500,
+opciones:[2500,2000,3000,1500]
+}
+
+];
+
+let nivel = 0;
+
+function cargarNivel(){
+
+const actual =
+misiones[nivel];
+
+respuestaCorrecta =
+actual.correcta;
+
+problema.textContent =
+actual.texto;
+
+zona.textContent =
+"Suelta aquí";
+
+zona.dataset.valor = "";
+
+respuestasDiv.innerHTML = "";
+
+actual.opciones
+.sort(()=>Math.random()-0.5)
+.forEach(valor=>{
+
+const div =
+document.createElement("div");
+
+div.className =
+"respuesta";
+
+div.draggable = true;
+
+div.dataset.valor =
+valor;
+
+div.textContent =
+"$" + valor;
+
+div.addEventListener(
 "dragstart",
 e=>{
 
 e.dataTransfer.setData(
-"tipo",
-item.dataset.tipo
-);
-
-e.dataTransfer.setData(
-"texto",
-item.innerHTML
+"valor",
+valor
 );
 
 });
 
+respuestasDiv.appendChild(div);
+
 });
 
-document
-.querySelectorAll(".zona")
-.forEach(zona=>{
+}
 
 zona.addEventListener(
 "dragover",
@@ -63,60 +123,40 @@ e=>{
 
 e.preventDefault();
 
-if(
-zona.dataset.valor
-){
-return;
-}
+const valor =
+e.dataTransfer.getData("valor");
 
 zona.dataset.valor =
-e.dataTransfer.getData(
-"tipo"
-);
+valor;
 
-zona.innerHTML =
-e.dataTransfer.getData(
-"texto"
-);
+zona.textContent =
+"$" + valor;
 
 });
 
-});
-
-document
-.getElementById("verificar")
-.addEventListener(
+document.getElementById(
+"verificar"
+).addEventListener(
 "click",
 ()=>{
 
-let correctas = 0;
-
-document
-.querySelectorAll(".zona")
-.forEach(zona=>{
-
 if(
-zona.dataset.valor ===
-zona.dataset.correcto
+parseInt(zona.dataset.valor)
+=== respuestaCorrecta
 ){
 
-correctas++;
-
-}
-
-});
-
-if(correctas === 4){
-
-puntaje += 40;
+puntaje += 20;
 
 localStorage.setItem(
 "puntaje",
 puntaje
 );
 
+puntajeDiv.textContent =
+"⭐ " + puntaje;
+
 mensaje.textContent =
-"🎉 ¡Excelente!";
+"🎉 Correcto";
 
 mensaje.className =
 "correcto";
@@ -124,37 +164,56 @@ mensaje.className =
 correcto.play();
 
 confetti({
-
-particleCount:300,
-spread:180
-
+particleCount:200,
+spread:120
 });
 
-document
-.getElementById(
-"btnFinal"
-)
-.style.display =
-"inline-block";
+nivel++;
+
+if(
+nivel < misiones.length
+){
+
+setTimeout(
+cargarNivel,
+1000
+);
 
 }else{
+
+document.getElementById(
+"btnFinal"
+).style.display =
+"inline-block";
+
+document.getElementById(
+"verificar"
+).style.display =
+"none";
+
+}
+
+}
+else{
 
 vidas--;
 
 vidasDiv.textContent =
-
-"❤️".repeat(vidas)+
+"❤️".repeat(vidas)
++
 "🤍".repeat(3-vidas);
 
 mensaje.textContent =
-"❌ Inténtalo nuevamente";
+"❌ Incorrecto";
 
 mensaje.className =
 "incorrecto";
 
 incorrecto.play();
 
-if(vidas <= 0){
+if(
+vidas <= 0
+){
 
 location.reload();
 
@@ -164,9 +223,9 @@ location.reload();
 
 });
 
-document
-.getElementById("btnFinal")
-.addEventListener(
+document.getElementById(
+"btnFinal"
+).addEventListener(
 "click",
 ()=>{
 
@@ -174,3 +233,5 @@ window.location.href =
 "juego6.html";
 
 });
+
+cargarNivel();

@@ -4,14 +4,11 @@
 <head>
 
 <meta charset="UTF-8">
-
-<meta name="viewport"
-content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Juego 5</title>
 
-<link rel="stylesheet"
-href="css/juego5.css">
+<link rel="stylesheet" href="css/juego5.css">
 
 <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
 
@@ -19,133 +16,42 @@ href="css/juego5.css">
 
 <body>
 
-<video
-id="videoFondo"
-autoplay
-muted
-loop
-playsinline>
-
-<source
-src="videos/fondo.mp4"
-type="video/mp4">
-
+<video id="videoFondo" autoplay muted loop playsinline>
+<source src="videos/fondo.mp4" type="video/mp4">
 </video>
 
 <div id="vidas">❤️❤️❤️</div>
 
 <div id="puntaje">⭐ 0</div>
 
-<h1>
-
-🌱 Juego 5
-
-</h1>
+<h1>🛒 Juego 5</h1>
 
 <p class="instruccion">
-
-Arrastra cada elemento a su categoría
-
+Lee el problema y arrastra la respuesta correcta
 </p>
 
-<div id="elementos">
+<div id="problema"></div>
 
-<div class="item"
-draggable="true"
-data-tipo="productor">
+<div id="respuestas"></div>
 
-🌱 Pasto
-
-</div>
-
-<div class="item"
-draggable="true"
-data-tipo="consumidor">
-
-🐇 Conejo
-
-</div>
-
-<div class="item"
-draggable="true"
-data-tipo="descomponedor">
-
-🍄 Hongo
-
-</div>
-
-<div class="item"
-draggable="true"
-data-tipo="productor">
-
-🌳 Árbol
-
-</div>
-
-</div>
-
-<div class="zonas">
-
-<div
-class="zona"
-data-correcto="productor">
-
-🌱 Productor
-
-</div>
-
-<div
-class="zona"
-data-correcto="consumidor">
-
-🐇 Consumidor
-
-</div>
-
-<div
-class="zona"
-data-correcto="descomponedor">
-
-🍄 Descomponedor
-
-</div>
-
-<div
-class="zona"
-data-correcto="productor">
-
-🌱 Productor
-
-</div>
-
+<div class="zona" id="zonaRespuesta">
+Suelta aquí
 </div>
 
 <div id="mensaje"></div>
 
 <button id="verificar">
-
 ✅ Verificar
-
 </button>
 
 <button id="btnFinal">
-
 🏆 Finalizar
-
 </button>
 
-<audio
-id="correcto"
-src="sonidos/correcto.mp3">
-</audio>
-
-<audio
-id="incorrecto"
-src="sonidos/incorrecto.mp3">
-</audio>
+<audio id="correcto" src="sonidos/correcto.mp3"></audio>
+<audio id="incorrecto" src="sonidos/incorrecto.mp3"></audio>
 
 <script src="js/juego5.js"></script>
 
 </body>
-
 </html>
