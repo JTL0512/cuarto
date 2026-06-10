@@ -9,6 +9,39 @@ document.getElementById("btnEntrar");
 
 let avatarSeleccionado = "";
 
+/* VOZ */
+
+function hablar(texto){
+
+    speechSynthesis.cancel();
+
+    const voz =
+    new SpeechSynthesisUtterance(texto);
+
+    voz.lang = "es-CL";
+
+    voz.rate = 0.95;
+
+    speechSynthesis.speak(voz);
+
+}
+
+/* MENSAJE INICIAL */
+
+window.addEventListener(
+"load",
+()=>{
+
+    setTimeout(()=>{
+
+        hablar(
+        "Bienvenido. Escribe tu nombre y selecciona un avatar para comenzar."
+        );
+
+    },1000);
+
+});
+
 /* AVATAR */
 
 avatares.forEach(avatar=>{
@@ -30,6 +63,10 @@ avatares.forEach(avatar=>{
         avatarSeleccionado =
         avatar.src;
 
+        hablar(
+        "Avatar seleccionado"
+        );
+
     });
 
 });
@@ -39,8 +76,29 @@ avatares.forEach(avatar=>{
 btnEntrar.addEventListener("click",()=>{
 
     if(
+        nombre.value.trim()==="" &&
+        avatarSeleccionado === ""
+    ){
+
+        hablar(
+        "Debes escribir tu nombre y seleccionar un avatar"
+        );
+
+        alert(
+        "Escribe tu nombre y selecciona un avatar"
+        );
+
+        return;
+
+    }
+
+    if(
         nombre.value.trim()===""
     ){
+
+        hablar(
+        "Debes escribir tu nombre"
+        );
 
         alert(
         "Escribe tu nombre"
@@ -53,6 +111,10 @@ btnEntrar.addEventListener("click",()=>{
     if(
         avatarSeleccionado === ""
     ){
+
+        hablar(
+        "Debes seleccionar un avatar"
+        );
 
         alert(
         "Selecciona un avatar"
@@ -77,7 +139,15 @@ btnEntrar.addEventListener("click",()=>{
     0
     );
 
-    window.location.href =
-    "bienvenida2.html";
+    hablar(
+    "Excelente. Comencemos la aventura matemática."
+    );
+
+    setTimeout(()=>{
+
+        window.location.href =
+        "bienvenida2.html";
+
+    },2000);
 
 });
