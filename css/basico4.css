@@ -97,7 +97,8 @@ body{
 /* CONTENEDOR */
 
 .contenedor{
-    width: 95%;
+
+    width:95%;
 
     max-width:1000px;
 
@@ -115,12 +116,11 @@ body{
 
     border:
     2px solid
-    rgba(56,189,248,0.5);
+    rgba(56,189,248,0.4);
 
     box-shadow:
-    0 0 20px #38bdf8,
-    0 0 40px #38bdf8,
-    0 0 80px #38bdf8;
+    0 0 10px rgba(56,189,248,.25),
+    0 0 20px rgba(56,189,248,.15);
 
 }
 
@@ -132,10 +132,11 @@ h1{
 
     margin-bottom:15px;
 
+    color:#f8fafc;
+
     text-shadow:
-    0 0 10px cyan,
-    0 0 20px cyan,
-    0 0 40px cyan;
+    0 0 4px rgba(0,255,255,.5),
+    0 0 8px rgba(0,255,255,.3);
 
 }
 
@@ -158,11 +159,11 @@ section{
 .tarjeta{
 
     background:
-    rgba(255,255,255,0.12);
+    rgba(255,255,255,0.10);
 
     border:
     2px solid
-    rgba(0,255,255,0.5);
+    rgba(0,255,255,0.25);
 
     text-align:center;
 
@@ -176,8 +177,7 @@ section{
     blur(15px);
 
     box-shadow:
-    0 0 15px cyan,
-    0 0 30px cyan;
+    0 0 8px rgba(0,255,255,.25);
 
     transition:0.3s;
 
@@ -189,8 +189,8 @@ section{
     translateY(-5px);
 
     box-shadow:
-    0 0 40px
-    rgba(0,255,255,0.8);
+    0 0 15px rgba(0,255,255,.35);
+
 }
 
 h2{
@@ -363,25 +363,23 @@ body{
     border-radius:20px;
 
     background:
-    rgba(0,255,255,0.1);
+    rgba(0,255,255,0.08);
 
     border:
     2px solid
-    rgba(0,255,255,0.5);
+    rgba(0,255,255,0.25);
 
-    color:#00ffff;
+    color:#67e8f9;
 
     text-shadow:
-    0 0 10px #00ffff,
-    0 0 20px #00ffff,
-    0 0 40px #00ffff;
+    0 0 3px rgba(0,255,255,.4);
 
     box-shadow:
-    0 0 15px #00ffff,
-    0 0 30px #00ffff;
+    0 0 8px rgba(0,255,255,.25);
 
     animation:
     brillo 2s infinite alternate;
+
 }
 
 @keyframes brillo{
@@ -391,22 +389,21 @@ body{
         transform:scale(1);
 
         box-shadow:
-        0 0 15px #00ffff,
-        0 0 30px #00ffff;
+        0 0 8px rgba(0,255,255,.25);
 
     }
 
     to{
 
-        transform:scale(1.03);
+        transform:scale(1.02);
 
         box-shadow:
-        0 0 30px #00ffff,
-        0 0 60px #00ffff;
+        0 0 15px rgba(0,255,255,.35);
 
     }
 
 }
+
 
 button{
 

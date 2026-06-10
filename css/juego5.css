@@ -6,17 +6,58 @@ box-sizing:border-box;
 
 }
 
+#videoFondo{
+
+position:fixed;
+
+top:0;
+left:0;
+
+width:100%;
+height:100%;
+
+object-fit:cover;
+
+z-index:-20;
+
+}
+
+body::before{
+
+content:"";
+
+position:fixed;
+
+width:100%;
+height:100%;
+
+background:
+rgba(0,0,0,.85);
+
+z-index:-10;
+
+}
+
 body{
-
-background:#0f172a;
-
-color:white;
 
 font-family:Arial;
 
-text-align:center;
+color:white;
 
 padding:30px;
+
+text-align:center;
+
+}
+
+#vidas{
+
+position:fixed;
+
+top:20px;
+left:20px;
+
+font-size:35px;
 
 }
 
@@ -25,40 +66,31 @@ padding:30px;
 position:fixed;
 
 top:20px;
-
 right:20px;
 
 padding:15px 25px;
 
 border-radius:20px;
 
-background:rgba(255,255,255,.1);
-
 border:2px solid gold;
 
-box-shadow:0 0 20px gold;
-
-font-size:24px;
-
-font-weight:bold;
+background:
+rgba(255,255,255,.1);
 
 }
 
 h1{
 
-margin-bottom:20px;
+margin-top:50px;
+
+font-size:55px;
+
+text-shadow:
+0 0 20px cyan;
 
 }
 
-.instruccion{
-
-font-size:22px;
-
-margin-bottom:30px;
-
-}
-
-.respuestas{
+#elementos{
 
 display:flex;
 
@@ -68,63 +100,52 @@ gap:20px;
 
 flex-wrap:wrap;
 
-margin-bottom:40px;
+margin:40px;
 
 }
 
-.respuesta{
+.item{
 
-width:120px;
+padding:20px;
 
-height:80px;
+border-radius:20px;
 
-background:cyan;
-
-color:black;
-
-font-size:30px;
-
-font-weight:bold;
-
-border-radius:15px;
-
-display:flex;
-
-justify-content:center;
-
-align-items:center;
+background:
+linear-gradient(
+45deg,
+#00e5ff,
+#7c4dff
+);
 
 cursor:grab;
 
+font-size:24px;
+
+font-weight:bold;
+
 }
 
-.ejercicio{
+.zonas{
 
 display:flex;
 
 justify-content:center;
 
-align-items:center;
-
 gap:20px;
 
-font-size:35px;
-
-font-weight:bold;
-
-margin:25px;
+flex-wrap:wrap;
 
 }
 
 .zona{
 
-width:100px;
+width:220px;
 
-height:80px;
+height:120px;
 
 border:3px dashed cyan;
 
-border-radius:15px;
+border-radius:20px;
 
 display:flex;
 
@@ -132,42 +153,50 @@ justify-content:center;
 
 align-items:center;
 
-font-size:30px;
-
-}
-
-#mensaje{
-
-margin-top:20px;
-
-font-size:28px;
+font-size:24px;
 
 font-weight:bold;
 
 }
 
-button{
+#mensaje{
 
 margin-top:30px;
 
-padding:15px 30px;
+font-size:30px;
 
-font-size:20px;
+font-weight:bold;
+
+}
+
+#verificar,
+#btnFinal{
+
+margin-top:30px;
+
+padding:15px 35px;
+
+font-size:22px;
 
 border:none;
 
-border-radius:15px;
+border-radius:20px;
+
+background:
+linear-gradient(
+45deg,
+#00e5ff,
+#7c4dff
+);
+
+color:white;
 
 cursor:pointer;
 
 }
 
-#btnSiguiente{
+#btnFinal{
 
 display:none;
-
-background:#22c55e;
-
-color:white;
 
 }

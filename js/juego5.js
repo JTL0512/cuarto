@@ -1,175 +1,53 @@
-const contenedor =
-document.getElementById(
-"contenedorEjercicios"
-);
-
-const respuestasDiv =
-document.querySelector(
-".respuestas"
-);
-
-const mensaje =
-document.getElementById(
-"mensaje"
-);
-
 const puntajeDiv =
-document.getElementById(
-"puntaje"
-);
+document.getElementById("puntaje");
 
 const vidasDiv =
-document.getElementById(
-"vidas"
-);
+document.getElementById("vidas");
 
-let vidas = 3;
+const mensaje =
+document.getElementById("mensaje");
+
+const correcto =
+document.getElementById("correcto");
+
+const incorrecto =
+document.getElementById("incorrecto");
 
 let puntaje =
 parseInt(
-localStorage.getItem(
-"puntaje"
-)
+localStorage.getItem("puntaje")
 ) || 0;
+
+let vidas = 3;
 
 puntajeDiv.textContent =
 "⭐ " + puntaje;
 
-vidasDiv.textContent =
-"❤️❤️❤️";
+document
+.querySelectorAll(".item")
+.forEach(item=>{
 
-const correcto =
-document.getElementById(
-"correcto"
-);
-
-const incorrecto =
-document.getElementById(
-"incorrecto"
-);
-
-const secuencias = [];
-
-for(let i=0;i<5;i++){
-
-let inicio =
-Math.floor(
-Math.random()*8000
-)+1000;
-
-let salto =
-Math.floor(
-Math.random()*400
-)+100;
-
-let faltante =
-inicio + salto*2;
-
-secuencias.push({
-
-texto:
-`
-${inicio}
- →
-${inicio+salto}
- →
-___
- →
-${inicio+salto*3}
- →
-${inicio+salto*4}
-`,
-
-respuesta:
-faltante
-
-});
-
-}
-
-const respuestas = [];
-
-secuencias.forEach(s=>{
-
-respuestas.push(
-s.respuesta
-);
-
-});
-
-respuestas.sort(
-()=>Math.random()-0.5
-);
-
-secuencias.forEach(s=>{
-
-contenedor.innerHTML +=
-
-`
-<div class="ejercicio">
-
-<p>
-
-${s.texto}
-
-</p>
-
-<div
-class="zona"
-data-correcto="${s.respuesta}">
-
-?
-
-</div>
-
-</div>
-`;
-
-});
-
-respuestas.forEach(r=>{
-
-respuestasDiv.innerHTML +=
-
-`
-<div
-class="respuesta"
-draggable="true"
-data-valor="${r}">
-
-${r}
-
-</div>
-`;
-
-});
-
-const respuestasDrag =
-document.querySelectorAll(
-".respuesta"
-);
-
-const zonas =
-document.querySelectorAll(
-".zona"
-);
-
-respuestasDrag.forEach(r=>{
-
-r.addEventListener(
+item.addEventListener(
 "dragstart",
 e=>{
 
 e.dataTransfer.setData(
-"valor",
-r.dataset.valor
+"tipo",
+item.dataset.tipo
+);
+
+e.dataTransfer.setData(
+"texto",
+item.innerHTML
 );
 
 });
 
 });
 
-zonas.forEach(zona=>{
+document
+.querySelectorAll(".zona")
+.forEach(zona=>{
 
 zona.addEventListener(
 "dragover",
@@ -191,47 +69,35 @@ zona.dataset.valor
 return;
 }
 
-const valor =
-e.dataTransfer.getData(
-"valor"
-);
-
-zona.textContent =
-valor;
-
 zona.dataset.valor =
-valor;
-
-const original =
-[...respuestasDrag].find(
-r =>
-r.dataset.valor === valor
+e.dataTransfer.getData(
+"tipo"
 );
 
-if(original){
-
-original.style.visibility =
-"hidden";
-
-}
+zona.innerHTML =
+e.dataTransfer.getData(
+"texto"
+);
 
 });
 
 });
 
-document.getElementById(
-"verificar"
-).addEventListener(
+document
+.getElementById("verificar")
+.addEventListener(
 "click",
 ()=>{
 
 let correctas = 0;
 
-zonas.forEach(z=>{
+document
+.querySelectorAll(".zona")
+.forEach(zona=>{
 
 if(
-z.dataset.valor ===
-z.dataset.correcto
+zona.dataset.valor ===
+zona.dataset.correcto
 ){
 
 correctas++;
@@ -240,11 +106,9 @@ correctas++;
 
 });
 
-if(
-correctas === 5
-){
+if(correctas === 4){
 
-puntaje += 50;
+puntaje += 40;
 
 localStorage.setItem(
 "puntaje",
@@ -252,73 +116,61 @@ puntaje
 );
 
 mensaje.textContent =
-"🏆 Excelente";
+"🎉 ¡Excelente!";
+
+mensaje.className =
+"correcto";
 
 correcto.play();
 
 confetti({
 
-particleCount:400,
-
+particleCount:300,
 spread:180
 
 });
 
-setTimeout(()=>{
+document
+.getElementById(
+"btnFinal"
+)
+.style.display =
+"inline-block";
 
-window.location.href =
-"final.html";
-
-},2500);
-
-}
-
-else{
+}else{
 
 vidas--;
 
 vidasDiv.textContent =
 
-"❤️".repeat(vidas) +
-
-"🤍".repeat(
-3-vidas
-);
-
-incorrecto.play();
+"❤️".repeat(vidas)+
+"🤍".repeat(3-vidas);
 
 mensaje.textContent =
 "❌ Inténtalo nuevamente";
 
-zonas.forEach(z=>{
+mensaje.className =
+"incorrecto";
 
-z.textContent =
-"?";
+incorrecto.play();
 
-z.dataset.valor =
-"";
-
-});
-
-respuestasDrag.forEach(r=>{
-
-r.style.visibility =
-"visible";
-
-});
-
-if(
-vidas <= 0
-){
-
-alert(
-"Te quedaste sin vidas"
-);
+if(vidas <= 0){
 
 location.reload();
 
 }
 
 }
+
+});
+
+document
+.getElementById("btnFinal")
+.addEventListener(
+"click",
+()=>{
+
+window.location.href =
+"juego6.html";
 
 });

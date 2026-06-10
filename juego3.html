@@ -19,6 +19,25 @@ href="css/juego3.css">
 
 <body>
 
+<video
+id="videoFondo"
+autoplay
+muted
+loop
+playsinline>
+
+<source
+src="videos/fondo.mp4"
+type="video/mp4">
+
+</video>
+
+<div id="vidas">
+
+❤️❤️❤️
+
+</div>
+
 <div id="puntaje">
 
 ⭐ 0
@@ -33,29 +52,21 @@ href="css/juego3.css">
 
 <p class="instruccion">
 
-Arrastra la respuesta correcta a cada operación
+Arrastra el resultado correcto
 
 </p>
 
-<!-- RESPUESTAS -->
-
-<div class="respuestas">
+<div id="respuestas">
 
 </div>
 
-<!-- EJERCICIOS -->
-
-<div id="contenedorEjercicios">
+<div id="ejercicios">
 
 </div>
-
-<!-- MENSAJE -->
 
 <div id="mensaje">
 
 </div>
-
-<!-- BOTONES -->
 
 <button id="verificar">
 
@@ -69,18 +80,14 @@ Arrastra la respuesta correcta a cada operación
 
 </button>
 
-<!-- SONIDOS -->
-
 <audio
 id="correcto"
 src="sonidos/correcto.mp3">
-
 </audio>
 
 <audio
 id="incorrecto"
 src="sonidos/incorrecto.mp3">
-
 </audio>
 
 <script src="js/juego3.js"></script>

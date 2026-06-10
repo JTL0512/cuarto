@@ -1,0 +1,122 @@
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+
+</head>
+
+<body>
+
+<video id="videoFondo" autoplay muted loop playsinline>
+
+<source src="videos/fondo.mp4" type="video/mp4">
+
+</video>
+
+<div id="overlay"></div>
+
+<!-- VIDAS -->
+
+<div id="vidas">
+
+❤️❤️❤️
+
+</div>
+
+<!-- PUNTAJE -->
+
+<div id="puntaje">
+
+⭐ 0
+
+</div>
+
+<!-- BARRA PROGRESO -->
+
+<div id="barraContenedor">
+
+<div id="barra">
+
+<img
+src="img/carrito.png"
+id="carrito">
+
+<div id="meta">
+
+🏁
+
+</div>
+
+</div>
+
+<div id="porcentaje">
+
+0%
+
+</div>
+
+</div>
+
+<!-- TITULO -->
+
+<h1>
+
+🛒 Supermercado Inteligente
+
+</h1>
+
+<p id="descripcion">
+
+Completa las misiones y llena tu carrito.
+
+</p>
+
+<!-- CONTENIDO -->
+
+<div id="contenido">
+
+</div>
+
+<!-- MENSAJE -->
+
+<div id="mensaje">
+
+</div>
+
+<!-- BOTONES -->
+
+<div id="botones">
+
+<button id="verificar">
+
+✅ Verificar
+
+</button>
+
+<button id="siguiente">
+
+➡️ Siguiente misión
+
+</button>
+
+</div>
+
+<!-- AUDIOS -->
+
+<audio
+id="correcto"
+src="sonidos/correcto.mp3">
+</audio>
+
+<audio
+id="incorrecto"
+src="sonidos/incorrecto.mp3">
+</audio>
+
+<audio
+id="victoria"
+src="sonidos/victoria.mp3">
+</audio>
+
+<script src="js/juego6.js"></script>
+
+</body>
+
+</html>

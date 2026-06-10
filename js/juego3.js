@@ -1,332 +1,324 @@
-const contenedor =
-document.getElementById(
-"contenedorEjercicios"
-);
+const respuestasDiv =
+document.getElementById("respuestas");
 
-const contenedorRespuestas =
-document.querySelector(
-".respuestas"
-);
+const ejerciciosDiv =
+document.getElementById("ejercicios");
 
 const mensaje =
-document.getElementById(
-"mensaje"
-);
+document.getElementById("mensaje");
 
 const correcto =
-document.getElementById(
-"correcto"
-);
+document.getElementById("correcto");
 
 const incorrecto =
-document.getElementById(
-"incorrecto"
-);
+document.getElementById("incorrecto");
 
 const puntajeDiv =
-document.getElementById(
-"puntaje"
-);
+document.getElementById("puntaje");
+
+const vidasDiv =
+document.getElementById("vidas");
 
 let puntaje =
 parseInt(
-localStorage.getItem(
-"puntaje"
-)
+localStorage.getItem("puntaje")
 ) || 0;
+
+let vidas = 3;
 
 puntajeDiv.textContent =
 "⭐ " + puntaje;
 
-const ejercicios = [];
-const respuestas = [];
+vidasDiv.textContent =
+"❤️❤️❤️";
+
+let respuestasCorrectas = [];
 
 /* CREAR EJERCICIOS */
 
 for(let i=0;i<4;i++){
 
-    const tipo =
-    Math.random() < 0.5
-    ? "+"
-    : "-";
+let a =
+Math.floor(Math.random()*400)+100;
 
-    let n1;
-    let n2;
-    let resultado;
+let b =
+Math.floor(Math.random()*200)+50;
 
-    if(tipo === "+"){
+let operacion =
+Math.random() < 0.5
+? "+"
+: "-";
 
-        n1 =
-        Math.floor(
-        Math.random()*500
-        ) + 100;
+let resultado;
 
-        n2 =
-        Math.floor(
-        Math.random()*500
-        ) + 100;
+if(operacion === "+"){
 
-        resultado =
-        n1 + n2;
+resultado = a + b;
 
-    }
+}else{
 
-    else{
+resultado = a - b;
 
-        n1 =
-        Math.floor(
-        Math.random()*900
-        ) + 100;
+}
 
-        n2 =
-        Math.floor(
-        Math.random()*n1
-        );
+respuestasCorrectas.push(
+resultado
+);
 
-        resultado =
-        n1 - n2;
+ejerciciosDiv.innerHTML +=
 
-    }
+`
+<div class="ejercicio">
 
-    ejercicios.push({
+<span>
+${a}
+${operacion}
+${b}
+=
+</span>
 
-        n1,
-        n2,
-        tipo,
-        resultado
+<div
+class="zona"
+data-correcto="${resultado}">
+?
+</div>
 
-    });
-
-    respuestas.push(
-    resultado
-    );
+</div>
+`;
 
 }
 
 /* MEZCLAR RESPUESTAS */
 
+let respuestas =
+[...respuestasCorrectas];
+
 respuestas.sort(
-()=> Math.random()-0.5
+()=>Math.random()-0.5
 );
-
-/* MOSTRAR EJERCICIOS */
-
-ejercicios.forEach(e=>{
-
-    contenedor.innerHTML +=
-
-    `
-    <div class="ejercicio">
-
-        ${e.n1}
-        ${e.tipo}
-        ${e.n2}
-        =
-
-        <div
-        class="zona"
-        data-correcto="${e.resultado}">
-
-        ?
-
-        </div>
-
-    </div>
-    `;
-
-});
-
-/* MOSTRAR RESPUESTAS */
 
 respuestas.forEach(r=>{
 
-    contenedorRespuestas.innerHTML +=
+respuestasDiv.innerHTML +=
 
-    `
-    <div
-    class="respuesta"
-    draggable="true"
-    data-valor="${r}">
+`
+<div
+class="respuesta"
+draggable="true"
+data-valor="${r}">
 
-    ${r}
+${r}
 
-    </div>
-    `;
+</div>
+`;
 
 });
 
-const respuestasDrag =
-document.querySelectorAll(
-".respuesta"
-);
-
-const zonas =
-document.querySelectorAll(
-".zona"
-);
-
 /* DRAG */
 
-respuestasDrag.forEach(r=>{
+document
+.querySelectorAll(
+".respuesta"
+)
+.forEach(respuesta=>{
 
-    r.addEventListener(
-    "dragstart",
-    e=>{
+respuesta.addEventListener(
+"dragstart",
+e=>{
 
-        e.dataTransfer.setData(
-        "valor",
-        r.dataset.valor
-        );
+e.dataTransfer.setData(
+"valor",
+respuesta.dataset.valor
+);
 
-    });
+});
 
 });
 
 /* DROP */
 
-zonas.forEach(zona=>{
+document
+.querySelectorAll(
+".zona"
+)
+.forEach(zona=>{
 
-    zona.addEventListener(
-    "dragover",
-    e=>{
+zona.addEventListener(
+"dragover",
+e=>{
 
-        e.preventDefault();
+e.preventDefault();
 
-    });
+});
 
-    zona.addEventListener(
-    "drop",
-    e=>{
+zona.addEventListener(
+"drop",
+e=>{
 
-        e.preventDefault();
+e.preventDefault();
 
-        if(
-        zona.dataset.valor
-        ){
-            return;
-        }
+if(
+zona.dataset.valor
+){
+return;
+}
 
-        const valor =
-        e.dataTransfer.getData(
-        "valor"
-        );
+const valor =
+e.dataTransfer.getData(
+"valor"
+);
 
-        zona.textContent =
-        valor;
+zona.textContent =
+valor;
 
-        zona.dataset.valor =
-        valor;
+zona.dataset.valor =
+valor;
 
-        const original =
-        [...respuestasDrag].find(
-        r =>
-        r.dataset.valor === valor
-        );
+document
+.querySelector(
+`[data-valor="${valor}"]`
+)
+.style.visibility =
+"hidden";
 
-        if(original){
-
-            original.style.visibility =
-            "hidden";
-
-        }
-
-    });
+});
 
 });
 
 /* VERIFICAR */
 
-document.getElementById(
+document
+.getElementById(
 "verificar"
-).addEventListener(
+)
+.addEventListener(
 "click",
 ()=>{
 
-    let correctas = 0;
+let correctas = 0;
 
-    zonas.forEach(zona=>{
+document
+.querySelectorAll(
+".zona"
+)
+.forEach(zona=>{
 
-        if(
-        zona.dataset.valor ===
-        zona.dataset.correcto
-        ){
+if(
+zona.dataset.valor ===
+zona.dataset.correcto
+){
 
-            correctas++;
+correctas++;
 
-        }
-
-    });
-
-    if(correctas === 4){
-
-        puntaje += 40;
-
-        localStorage.setItem(
-        "puntaje",
-        puntaje
-        );
-
-        puntajeDiv.textContent =
-        "⭐ " + puntaje;
-
-        mensaje.textContent =
-        "🎉 ¡Excelente!";
-
-        correcto.currentTime = 0;
-
-        correcto.play();
-
-        confetti({
-
-            particleCount:300,
-            spread:150
-
-        });
-
-        document.getElementById(
-        "btnSiguiente"
-        ).style.display =
-        "inline-block";
-
-    }
-
-    else{
-
-        mensaje.textContent =
-        "❌ Incorrecto. Inténtalo nuevamente";
-
-        incorrecto.currentTime = 0;
-
-        incorrecto.play();
-
-        zonas.forEach(zona=>{
-
-            zona.textContent =
-            "?";
-
-            zona.dataset.valor =
-            "";
-
-        });
-
-        respuestasDrag.forEach(r=>{
-
-            r.style.visibility =
-            "visible";
-
-        });
-
-    }
+}
 
 });
 
-document.getElementById(
+if(correctas === 4){
+
+puntaje += 40;
+
+localStorage.setItem(
+"puntaje",
+puntaje
+);
+
+puntajeDiv.textContent =
+"⭐ " + puntaje;
+
+mensaje.textContent =
+"🎉 ¡Excelente!";
+
+mensaje.className =
+"correcto";
+
+correcto.play();
+
+confetti({
+
+particleCount:300,
+
+spread:180
+
+});
+
+document
+.getElementById(
 "btnSiguiente"
-).addEventListener(
+)
+.style.display =
+"inline-block";
+
+document
+.getElementById(
+"verificar"
+)
+.style.display =
+"none";
+
+}else{
+
+vidas--;
+
+vidasDiv.textContent =
+
+"❤️".repeat(vidas)+
+"🤍".repeat(3-vidas);
+
+mensaje.textContent =
+"❌ Inténtalo nuevamente";
+
+mensaje.className =
+"incorrecto";
+
+incorrecto.play();
+
+document
+.querySelectorAll(
+".zona"
+)
+.forEach(z=>{
+
+z.textContent="?";
+
+z.dataset.valor="";
+
+});
+
+document
+.querySelectorAll(
+".respuesta"
+)
+.forEach(r=>{
+
+r.style.visibility=
+"visible";
+
+});
+
+if(vidas <= 0){
+
+alert(
+"Te quedaste sin vidas"
+);
+
+location.reload();
+
+}
+
+}
+
+});
+
+document
+.getElementById(
+"btnSiguiente"
+)
+.addEventListener(
 "click",
 ()=>{
 
-    window.location.href =
-    "juego4.html";
+window.location.href =
+"juego4.html";
 
 });

@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html lang="es">
 
 <head>
@@ -19,35 +18,40 @@ href="css/juego4.css">
 
 <body>
 
-<div id="puntaje">
+<video
+id="videoFondo"
+autoplay
+muted
+loop
+playsinline>
 
-⭐ 0
+<source
+src="videos/fondo.mp4"
+type="video/mp4">
 
-</div>
+</video>
+
+<div id="vidas">❤️❤️❤️</div>
+
+<div id="puntaje">⭐ 0</div>
 
 <h1>
 
-✖️ Juego 4
+✖️➗ Juego 4
 
 </h1>
 
 <p class="instruccion">
 
-Arrastra la respuesta correcta
+Arrastra el resultado correcto
 
 </p>
 
-<div class="respuestas">
+<div id="respuestas"></div>
 
-</div>
+<div id="ejercicios"></div>
 
-<div id="contenedorEjercicios">
-
-</div>
-
-<div id="mensaje">
-
-</div>
+<div id="mensaje"></div>
 
 <button id="verificar">
 
@@ -57,7 +61,7 @@ Arrastra la respuesta correcta
 
 <button id="btnSiguiente">
 
-🏁 Finalizar
+🏆 Juego 5
 
 </button>
 

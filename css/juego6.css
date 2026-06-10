@@ -1,0 +1,370 @@
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+#videoFondo{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+object-fit:cover;
+z-index:-20;
+}
+
+#overlay{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,.75);
+z-index:-10;
+}
+
+body{
+font-family:Arial, sans-serif;
+color:white;
+min-height:100vh;
+padding:20px;
+text-align:center;
+overflow-x:hidden;
+}
+
+/* VIDAS */
+
+#vidas{
+position:fixed;
+top:20px;
+left:20px;
+font-size:35px;
+font-weight:bold;
+z-index:100;
+text-shadow:
+0 0 10px red,
+0 0 20px red;
+}
+
+/* PUNTAJE */
+
+#puntaje{
+position:fixed;
+top:20px;
+right:20px;
+padding:15px 25px;
+border-radius:20px;
+background:rgba(255,255,255,.1);
+backdrop-filter:blur(10px);
+border:2px solid gold;
+box-shadow:
+0 0 15px gold,
+0 0 30px gold;
+font-size:24px;
+font-weight:bold;
+z-index:100;
+}
+
+/* TITULO */
+
+h1{
+margin-top:80px;
+font-size:55px;
+text-shadow:
+0 0 10px cyan,
+0 0 20px cyan,
+0 0 40px cyan;
+}
+
+#descripcion{
+font-size:24px;
+margin-top:10px;
+margin-bottom:30px;
+}
+
+/* BARRA */
+
+#barraContenedor{
+width:90%;
+max-width:1000px;
+margin:20px auto;
+}
+
+#barra{
+position:relative;
+height:20px;
+background:#1e293b;
+border-radius:50px;
+border:2px solid cyan;
+box-shadow:
+0 0 10px cyan,
+0 0 20px cyan;
+}
+
+#carrito{
+position:absolute;
+width:70px;
+top:-28px;
+left:0;
+transition:1s ease;
+}
+
+#meta{
+position:absolute;
+right:-10px;
+top:-28px;
+font-size:40px;
+}
+
+#porcentaje{
+margin-top:20px;
+font-size:24px;
+font-weight:bold;
+color:#00e5ff;
+}
+
+/* CONTENIDO */
+
+#contenido{
+width:95%;
+max-width:1200px;
+margin:auto;
+display:flex;
+justify-content:center;
+align-items:center;
+flex-wrap:wrap;
+gap:25px;
+min-height:350px;
+}
+
+/* TARJETAS */
+
+.tarjeta{
+width:220px;
+padding:20px;
+background:
+rgba(255,255,255,.08);
+
+border-radius:25px;
+
+backdrop-filter:
+blur(15px);
+
+border:
+2px solid rgba(0,255,255,.3);
+
+box-shadow:
+0 0 20px rgba(0,255,255,.3);
+
+transition:.3s;
+}
+
+.tarjeta:hover{
+transform:
+translateY(-10px)
+scale(1.05);
+}
+
+.tarjeta img{
+width:140px;
+height:140px;
+object-fit:contain;
+margin-bottom:15px;
+}
+
+.nombre{
+font-size:24px;
+font-weight:bold;
+margin-bottom:10px;
+}
+
+.precio{
+font-size:30px;
+font-weight:bold;
+color:#22c55e;
+}
+
+/* OPCIONES */
+
+.opcion{
+width:250px;
+padding:20px;
+border-radius:25px;
+cursor:pointer;
+font-size:24px;
+font-weight:bold;
+
+background:
+linear-gradient(
+45deg,
+#00e5ff,
+#7c4dff
+);
+
+box-shadow:
+0 0 20px cyan,
+0 0 40px cyan;
+
+transition:.3s;
+}
+
+.opcion:hover{
+transform:
+scale(1.08);
+}
+
+/* MENSAJES */
+
+#mensaje{
+height:60px;
+margin-top:30px;
+font-size:35px;
+font-weight:bold;
+}
+
+.correcto{
+color:#22c55e;
+animation:
+verde .4s 6;
+}
+
+.incorrecto{
+color:#ef4444;
+animation:
+rojo .4s 6;
+}
+
+@keyframes verde{
+50%{
+opacity:0;
+}
+}
+
+@keyframes rojo{
+50%{
+opacity:0;
+}
+}
+
+/* BOTONES */
+
+#botones{
+margin-top:20px;
+}
+
+#verificar,
+#siguiente{
+
+padding:15px 35px;
+
+font-size:22px;
+
+font-weight:bold;
+
+border:none;
+
+border-radius:20px;
+
+cursor:pointer;
+
+color:white;
+
+margin:10px;
+
+background:
+linear-gradient(
+45deg,
+#00e5ff,
+#7c4dff
+);
+
+box-shadow:
+0 0 20px cyan,
+0 0 40px cyan;
+
+transition:.3s;
+}
+
+#verificar:hover,
+#siguiente:hover{
+transform:scale(1.08);
+}
+
+#siguiente{
+display:none;
+}
+
+/* FINAL */
+
+.final{
+padding:40px;
+border-radius:30px;
+
+background:
+rgba(255,255,255,.08);
+
+backdrop-filter:
+blur(15px);
+
+border:
+2px solid gold;
+
+box-shadow:
+0 0 30px gold;
+}
+
+.estrellas{
+font-size:80px;
+animation:
+brillo 1s infinite;
+}
+
+@keyframes brillo{
+
+50%{
+transform:scale(1.15);
+}
+
+}
+
+/* RESPONSIVE */
+
+@media(max-width:768px){
+
+h1{
+font-size:38px;
+}
+
+#descripcion{
+font-size:18px;
+}
+
+.tarjeta{
+width:170px;
+}
+
+.tarjeta img{
+width:100px;
+height:100px;
+}
+
+.nombre{
+font-size:18px;
+}
+
+.precio{
+font-size:24px;
+}
+
+.opcion{
+width:180px;
+font-size:18px;
+}
+
+#carrito{
+width:50px;
+top:-20px;
+}
+
+}

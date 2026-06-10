@@ -1,301 +1,317 @@
-const contenedor =
-document.getElementById(
-"contenedorEjercicios"
-);
+const respuestasDiv =
+document.getElementById("respuestas");
 
-const contenedorRespuestas =
-document.querySelector(
-".respuestas"
-);
+const ejerciciosDiv =
+document.getElementById("ejercicios");
 
 const mensaje =
-document.getElementById(
-"mensaje"
-);
+document.getElementById("mensaje");
 
 const correcto =
-document.getElementById(
-"correcto"
-);
+document.getElementById("correcto");
 
 const incorrecto =
-document.getElementById(
-"incorrecto"
-);
+document.getElementById("incorrecto");
 
 const puntajeDiv =
-document.getElementById(
-"puntaje"
-);
+document.getElementById("puntaje");
+
+const vidasDiv =
+document.getElementById("vidas");
 
 let puntaje =
 parseInt(
-localStorage.getItem(
-"puntaje"
-)
+localStorage.getItem("puntaje")
 ) || 0;
+
+let vidas = 3;
 
 puntajeDiv.textContent =
 "⭐ " + puntaje;
 
-const ejercicios = [];
-const respuestas = [];
+let respuestasCorrectas = [];
 
-/* CREAR MULTIPLICACIONES */
+/* EJERCICIOS */
 
 for(let i=0;i<4;i++){
 
-    const n1 =
-    Math.floor(
-    Math.random()*9
-    ) + 2;
+let operacion =
+Math.random() < 0.5
+? "x"
+: "÷";
 
-    const n2 =
-    Math.floor(
-    Math.random()*9
-    ) + 2;
+let a;
+let b;
+let resultado;
 
-    const resultado =
-    n1 * n2;
+if(operacion === "x"){
 
-    ejercicios.push({
+a =
+Math.floor(Math.random()*9)+2;
 
-        n1,
-        n2,
-        resultado
+b =
+Math.floor(Math.random()*9)+2;
 
-    });
+resultado =
+a*b;
 
-    respuestas.push(
-    resultado
-    );
+}else{
+
+resultado =
+Math.floor(Math.random()*9)+2;
+
+b =
+Math.floor(Math.random()*9)+2;
+
+a =
+resultado*b;
 
 }
 
-/* MEZCLAR RESPUESTAS */
-
-respuestas.sort(
-()=> Math.random()-0.5
+respuestasCorrectas.push(
+resultado
 );
 
-/* MOSTRAR EJERCICIOS */
+ejerciciosDiv.innerHTML +=
 
-ejercicios.forEach(e=>{
+`
+<div class="ejercicio">
 
-    contenedor.innerHTML +=
+<span>
 
-    `
-    <div class="ejercicio">
+${a}
+${operacion}
+${b}
+=
 
-    ${e.n1}
-    ×
-    ${e.n2}
-    =
+</span>
 
-    <div
-    class="zona"
-    data-correcto="${e.resultado}">
+<div
+class="zona"
+data-correcto="${resultado}">
 
-    ?
+?
 
-    </div>
+</div>
 
-    </div>
-    `;
+</div>
+`;
 
-});
+}
 
-/* MOSTRAR RESPUESTAS */
+let respuestas =
+[...respuestasCorrectas];
+
+respuestas.sort(
+()=>Math.random()-0.5
+);
 
 respuestas.forEach(r=>{
 
-    contenedorRespuestas.innerHTML +=
+respuestasDiv.innerHTML +=
 
-    `
-    <div
-    class="respuesta"
-    draggable="true"
-    data-valor="${r}">
+`
+<div
+class="respuesta"
+draggable="true"
+data-valor="${r}">
 
-    ${r}
+${r}
 
-    </div>
-    `;
+</div>
+`;
 
 });
 
-const respuestasDrag =
-document.querySelectorAll(
-".respuesta"
-);
-
-const zonas =
-document.querySelectorAll(
-".zona"
-);
-
 /* DRAG */
 
-respuestasDrag.forEach(r=>{
+document
+.querySelectorAll(".respuesta")
+.forEach(respuesta=>{
 
-    r.addEventListener(
-    "dragstart",
-    e=>{
+respuesta.addEventListener(
+"dragstart",
+e=>{
 
-        e.dataTransfer.setData(
-        "valor",
-        r.dataset.valor
-        );
+e.dataTransfer.setData(
+"valor",
+respuesta.dataset.valor
+);
 
-    });
+});
 
 });
 
 /* DROP */
 
-zonas.forEach(zona=>{
+document
+.querySelectorAll(".zona")
+.forEach(zona=>{
 
-    zona.addEventListener(
-    "dragover",
-    e=>{
+zona.addEventListener(
+"dragover",
+e=>{
 
-        e.preventDefault();
+e.preventDefault();
 
-    });
+});
 
-    zona.addEventListener(
-    "drop",
-    e=>{
+zona.addEventListener(
+"drop",
+e=>{
 
-        e.preventDefault();
+e.preventDefault();
 
-        if(
-        zona.dataset.valor
-        ){
-            return;
-        }
+if(
+zona.dataset.valor
+){
+return;
+}
 
-        const valor =
-        e.dataTransfer.getData(
-        "valor"
-        );
+const valor =
+e.dataTransfer.getData(
+"valor"
+);
 
-        zona.textContent =
-        valor;
+zona.textContent =
+valor;
 
-        zona.dataset.valor =
-        valor;
+zona.dataset.valor =
+valor;
 
-        const original =
-        [...respuestasDrag].find(
-        r =>
-        r.dataset.valor === valor
-        );
+document
+.querySelector(
+`[data-valor="${valor}"]`
+)
+.style.visibility =
+"hidden";
 
-        if(original){
-
-            original.style.visibility =
-            "hidden";
-
-        }
-
-    });
+});
 
 });
 
 /* VERIFICAR */
 
-document.getElementById(
-"verificar"
-).addEventListener(
+document
+.getElementById("verificar")
+.addEventListener(
 "click",
 ()=>{
 
-    let correctas = 0;
+let correctas = 0;
 
-    zonas.forEach(zona=>{
+document
+.querySelectorAll(".zona")
+.forEach(zona=>{
 
-        if(
-        zona.dataset.valor ===
-        zona.dataset.correcto
-        ){
+if(
+zona.dataset.valor ===
+zona.dataset.correcto
+){
 
-            correctas++;
+correctas++;
 
-        }
-
-    });
-
-    if(correctas === 4){
-
-        puntaje += 40;
-
-        localStorage.setItem(
-        "puntaje",
-        puntaje
-        );
-
-        puntajeDiv.textContent =
-        "⭐ " + puntaje;
-
-        mensaje.textContent =
-        "🎉 ¡Excelente!";
-
-        correcto.currentTime = 0;
-
-        correcto.play();
-
-        confetti({
-
-            particleCount:300,
-            spread:150
-
-        });
-
-        document.getElementById(
-        "btnSiguiente"
-        ).style.display =
-        "inline-block";
-
-    }
-
-    else{
-
-        mensaje.textContent =
-        "❌ Incorrecto. Inténtalo nuevamente";
-
-        incorrecto.currentTime = 0;
-
-        incorrecto.play();
-
-        zonas.forEach(zona=>{
-
-            zona.textContent =
-            "?";
-
-            zona.dataset.valor =
-            "";
-
-        });
-
-        respuestasDrag.forEach(r=>{
-
-            r.style.visibility =
-            "visible";
-
-        });
-
-    }
+}
 
 });
 
-document.getElementById(
+if(correctas === 4){
+
+puntaje += 40;
+
+localStorage.setItem(
+"puntaje",
+puntaje
+);
+
+puntajeDiv.textContent =
+"⭐ " + puntaje;
+
+mensaje.textContent =
+"🎉 ¡Excelente!";
+
+mensaje.className =
+"correcto";
+
+correcto.play();
+
+confetti({
+
+particleCount:300,
+spread:180
+
+});
+
+document
+.getElementById(
 "btnSiguiente"
-).addEventListener(
+).style.display =
+"inline-block";
+
+document
+.getElementById(
+"verificar"
+).style.display =
+"none";
+
+}else{
+
+vidas--;
+
+vidasDiv.textContent =
+
+"❤️".repeat(vidas)+
+"🤍".repeat(3-vidas);
+
+mensaje.textContent =
+"❌ Inténtalo nuevamente";
+
+mensaje.className =
+"incorrecto";
+
+incorrecto.play();
+
+document
+.querySelectorAll(".zona")
+.forEach(z=>{
+
+z.textContent="?";
+z.dataset.valor="";
+
+});
+
+document
+.querySelectorAll(".respuesta")
+.forEach(r=>{
+
+r.style.visibility =
+"visible";
+
+});
+
+if(vidas <= 0){
+
+alert(
+"Te quedaste sin vidas"
+);
+
+location.reload();
+
+}
+
+}
+
+});
+
+document
+.getElementById(
+"btnSiguiente"
+)
+.addEventListener(
 "click",
 ()=>{
 
-    window.location.href =
-    "juego5.html";
+window.location.href =
+"juego5.html";
 
 });
