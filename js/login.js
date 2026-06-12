@@ -139,15 +139,59 @@ btnEntrar.addEventListener("click",()=>{
     0
     );
 
-    hablar(
-    "Bien hecho."
-    );
+confetti({
 
-    setTimeout(()=>{
+    particleCount:250,
 
-        window.location.href =
-        "bienvenida2.html";
+    spread:180,
 
-    },2000);
+    startVelocity:45,
+
+    origin:{
+        y:0.6
+    }
+
+});
+
+setTimeout(()=>{
+
+    confetti({
+
+        particleCount:150,
+
+        spread:120,
+
+        origin:{
+            x:0.2,
+            y:0.6
+        }
+
+    });
+
+    confetti({
+
+        particleCount:150,
+
+        spread:120,
+
+        origin:{
+            x:0.8,
+            y:0.6
+        }
+
+    });
+
+},500);
+
+hablar(
+"Bien hecho."
+);
+
+setTimeout(()=>{
+
+    window.location.href =
+    "bienvenida2.html";
+
+},2500);
 
 });

@@ -76,6 +76,25 @@ voz
 
 }
 
+/* VOZ MISIONES */
+
+function hablarMision(texto){
+
+speechSynthesis.cancel();
+
+const voz =
+new SpeechSynthesisUtterance(
+texto
+);
+
+voz.lang = "es-CL";
+voz.rate = 0.95;
+voz.pitch = 1;
+
+speechSynthesis.speak(voz);
+
+}
+
 /* MISIONES */
 
 const misiones = [
@@ -183,6 +202,25 @@ misiones[misionActual];
 titulo.textContent =
 m.titulo;
 
+hablarMision(
+
+m.titulo.replace(
+/[^a-zA-Z0-9áéíóúÁÉÍÓÚñÑ ]/g,
+""
+)
+
++
+
+". "
+
++
+
+m.pregunta.replace(
+/\$(\d+)/g,
+"$1 pesos"
+)
+
+);
 seleccion = "";
 
 mensaje.textContent = "";
@@ -359,21 +397,73 @@ document
 .style.display =
 "none";
 
-setTimeout(()=>{
+speechSynthesis.cancel();
+
+const vozFinal =
+new SpeechSynthesisUtterance(
+
+"Felicidades. Llegaste al final de la aventura. Has completado todas las misiones del supermercado matemático. Excelente trabajo."
+
+);
+
+vozFinal.lang =
+"es-CL";
+
+vozFinal.rate =
+0.95;
+
+vozFinal.pitch =
+1;
+
+vozFinal.onend = ()=>{
 
 window.location.href =
 "final.html";
 
-},2500);
+};
+
+speechSynthesis.speak(
+vozFinal
+);
 
 return;
 
 }
 
-setTimeout(
-cargarMision,
-1200
+document.getElementById(
+"verificar"
+).disabled = true;
+
+speechSynthesis.cancel();
+
+const vozCorrecto =
+new SpeechSynthesisUtterance(
+"Correcto. Pasemos a la siguiente misión."
 );
+
+vozCorrecto.lang =
+"es-CL";
+
+vozCorrecto.rate =
+0.95;
+
+vozCorrecto.pitch =
+1;
+
+vozCorrecto.onend = ()=>{
+
+document.getElementById(
+"verificar"
+).disabled = false;
+
+cargarMision();
+
+};
+
+speechSynthesis.speak(
+vozCorrecto
+);
+
 
 }
 else{
