@@ -405,6 +405,18 @@ location.reload();
 });
 
 /* FINAL */
+document
+.getElementById(
+"btnFinal"
+)
+.addEventListener(
+"click",
+()=>{
+
+window.location.href =
+"final.html";
+
+});
 
 window.addEventListener(
 "load",
