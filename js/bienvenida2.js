@@ -49,17 +49,17 @@ voz.rate =
 voz.pitch =
 1;
 
-voz.onend = ()=>{
-
-btnContinuar.style.display =
-"inline-block";
-
-};
-
 speechSynthesis.cancel();
 
 speechSynthesis.speak(
 voz
 );
+
+setTimeout(()=>{
+
+btnContinuar.style.display =
+"inline-block";
+
+}, 17000);
 
 });
