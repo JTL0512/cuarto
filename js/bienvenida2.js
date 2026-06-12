@@ -18,6 +18,14 @@ document.getElementById(
 ).textContent =
 nombre;
 
+const btnContinuar =
+document.getElementById(
+"btnContinuar"
+);
+
+btnContinuar.style.display =
+"none";
+
 window.addEventListener(
 "load",
 ()=>{
@@ -28,7 +36,7 @@ new SpeechSynthesisUtterance(
 
 "Hola " +
 nombre +
-". En esta aventura aprenderás matemáticas, ganarás puntos y podrás conseguir una medalla."
+". Bienvenido. En esta aventura aprenderás a comparar números, ordenar números, resolver sumas, resolver restas, realizar multiplicaciones y divisiones. Además ganarás puntos durante los desafíos y podrás conseguir una medalla al completar la aventura."
 
 );
 
@@ -37,6 +45,18 @@ voz.lang =
 
 voz.rate =
 0.95;
+
+voz.pitch =
+1;
+
+voz.onend = ()=>{
+
+btnContinuar.style.display =
+"inline-block";
+
+};
+
+speechSynthesis.cancel();
 
 speechSynthesis.speak(
 voz

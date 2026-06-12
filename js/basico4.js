@@ -85,9 +85,8 @@ window.addEventListener(
 const voz =
 new SpeechSynthesisUtterance(
 
-"Hola " +
 localStorage.getItem("nombre") +
-". Bienvenido. Aquí aprenderás los contenidos necesarios antes de comenzar los desafíos matemáticos."
+". Aquí aprenderás los contenidos necesarios antes de comenzar los desafíos matemáticos."
 
 );
 
