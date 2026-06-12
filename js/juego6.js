@@ -1,84 +1,74 @@
-const puntajeDiv = document.getElementById("puntaje");
-const vidasDiv = document.getElementById("vidas");
-const mensaje = document.getElementById("mensaje");
-const contenido = document.getElementById("contenidoMision");
-const titulo = document.getElementById("tituloMision");
-const progreso = document.getElementById("progreso");
-const carrito = document.getElementById("carritoBarra");
+const puntajeDiv =
+document.getElementById("puntaje");
 
-const correcto = document.getElementById("correcto");
-const incorrecto = document.getElementById("incorrecto");
+const vidasDiv =
+document.getElementById("vidas");
+
+const contenido =
+document.getElementById("contenidoMision");
+
+const titulo =
+document.getElementById("tituloMision");
+
+const mensaje =
+document.getElementById("mensaje");
+
+const progreso =
+document.getElementById("progreso");
+
+const carritoBarra =
+document.getElementById("carritoBarra");
+
+const correcto =
+document.getElementById("correcto");
+
+const incorrecto =
+document.getElementById("incorrecto");
+
+let puntaje =
+parseInt(
+localStorage.getItem("puntaje")
+) || 0;
+
+let vidas = 3;
+
+let misionActual = 0;
+
+let seleccion = "";
+
+puntajeDiv.textContent =
+"⭐ " + puntaje;
+
+vidasDiv.textContent =
+"❤️❤️❤️";
+
+/* VOZ */
 
 function hablar(texto){
 
-    speechSynthesis.cancel();
+speechSynthesis.cancel();
 
-    const voz =
-    new SpeechSynthesisUtterance(texto);
+const voz =
+new SpeechSynthesisUtterance(texto);
 
-    voz.lang = "es-CL";
+voz.lang = "es-CL";
 
-    voz.rate = 0.95;
+voz.rate = 0.95;
 
-    voz.pitch = 1;
-
-    speechSynthesis.speak(voz);
+speechSynthesis.speak(voz);
 
 }
 
-window.addEventListener("load",()=>{
-
-    const btnComenzar =
-    document.getElementById("btnComenzar");
-
-    // Ocultar botón al inicio
-    btnComenzar.style.display = "none";
-
-    const texto =
-    "Bienvenido al supermercado matemático. Acompáñame en esta aventura dentro del supermercado. Resolverás desafíos matemáticos usando precios, sumas, restas y comparaciones. Llena tu carrito y completa todas las misiones.";
-
-    const voz =
-    new SpeechSynthesisUtterance(texto);
-
-    voz.lang = "es-CL";
-    voz.rate = 0.95;
-    voz.pitch = 1;
-
-    // Cuando termine de hablar aparece el botón
-voz.onend = () => {
-
-    btnComenzar.style.display =
-    "inline-block";
-
-    setTimeout(()=>{
-
-        btnComenzar.classList.add(
-        "mostrar"
-        );
-
-    },100);
-
-};
-
-    speechSynthesis.speak(voz);
-
-});
-
-let puntaje =
-parseInt(localStorage.getItem("puntaje")) || 0;
-
-let vidas = 3;
-let mision = 0;
-let seleccion = "";
-
-puntajeDiv.textContent = "⭐ " + puntaje;
+/* MISIONES */
 
 const misiones = [
 
 {
-titulo:"Misión 1",
-pregunta:"¿Cuál producto es más barato?",
+titulo:"🛒 Misión 1",
+pregunta:"¿Cuál producto es el más barato?",
+
 correcta:"platano",
+
 productos:[
 ["manzana","$1500"],
 ["platano","$1000"],
@@ -87,9 +77,11 @@ productos:[
 },
 
 {
-titulo:"Misión 2",
-pregunta:"¿Cuál producto cuesta menos?",
-correcta:"jugo",
+titulo:"💰 Misión 2",
+pregunta:"¿Cuál producto es el más caro?",
+
+correcta:"queso",
+
 productos:[
 ["leche","$2500"],
 ["jugo","$1500"],
@@ -98,101 +90,155 @@ productos:[
 },
 
 {
-titulo:"Misión 3",
-pregunta:"¿Qué producto cuesta menos?",
-correcta:"pan",
-productos:[
-["pan","$2000"],
-["cereal","$3500"],
-["huevos","$2800"]
+titulo:"👩 Misión 3",
+pregunta:
+"Mamá te dio $6000 para comprar Cereal ($3500) y Huevos ($2000). ¿Cuánto dinero te sobrará?",
+
+correcta:"500",
+
+opciones:[
+"500",
+"1000",
+"1500",
+"2000"
 ]
 },
 
 {
-titulo:"Misión 4",
-pregunta:"¿Cuál es el precio menor?",
-correcta:"yogurt",
-productos:[
-["yogurt","$1800"],
-["bebida","$2500"],
-["galletas","$2200"]
+titulo:"➕ Misión 4",
+pregunta:
+"Compras Pan ($2000) y Leche ($2500). ¿Cuánto gastarás en total?",
+
+correcta:"4500",
+
+opciones:[
+"3500",
+"4000",
+"4500",
+"5000"
 ]
 },
 
 {
-titulo:"Misión 5",
-pregunta:"Tienes $10000. Compras Leche($2500), Pan($2000), Jugo($1500) y Queso($2000). ¿Cuánto sobra?",
+titulo:"🏆 Misión 5",
+pregunta:
+"Tienes $10000. Compras Leche ($2500), Pan ($2000), Jugo ($1500) y Queso ($2000). ¿Cuánto dinero te sobra?",
+
 correcta:"2000",
-opciones:["1500","2000","2500","3000"]
+
+opciones:[
+"1500",
+"2000",
+"2500",
+"3000"
+]
 }
 
 ];
 
+/* COMENZAR */
+
 document
 .getElementById("btnComenzar")
-.addEventListener("click",()=>{
+.addEventListener(
+"click",
+()=>{
 
-    document.getElementById(
-    "pantallaInicio"
-    ).style.display="none";
+document.getElementById(
+"pantallaInicio"
+).style.display="none";
 
-    document.getElementById(
-    "juego"
-    ).style.display="block";
+document.getElementById(
+"juego"
+).style.display="block";
 
-    cargarMision();
+hablar(
+"Acompáñame en esta aventura dentro del supermercado. Resuelve todas las misiones matemáticas para completar el juego."
+);
+
+cargarMision();
 
 });
 
+/* CARGAR MISION */
 
 function cargarMision(){
 
-const actual = misiones[mision];
+const m =
+misiones[misionActual];
 
-titulo.textContent = actual.titulo;
-
-contenido.innerHTML = "";
-
-mensaje.textContent = "";
+titulo.textContent =
+m.titulo;
 
 seleccion = "";
 
-if(actual.productos){
+mensaje.textContent = "";
 
-contenido.innerHTML = `
+if(m.productos){
+
+contenido.innerHTML =
+
+`
 <div class="tarjeta">
-<h3>${actual.pregunta}</h3>
+
+<h3>${m.pregunta}</h3>
+
 <div class="productos">
-${actual.productos.map(p=>`
-<div class="producto"
+
+${m.productos.map(p=>`
+
+<div
+class="producto"
 onclick="seleccionar('${p[0]}',this)">
+
 <img src="img/${p[0]}.png">
+
 <p>${p[1]}</p>
+
 </div>
+
 `).join("")}
+
 </div>
+
 </div>
 `;
 
 }else{
 
-contenido.innerHTML = `
+contenido.innerHTML =
+
+`
 <div class="tarjeta">
-<h3>${actual.pregunta}</h3>
+
+<h3>${m.pregunta}</h3>
+
 <div class="productos">
-${actual.opciones.map(op=>`
-<div class="producto"
+
+${m.opciones.map(op=>`
+
+<div
+class="producto"
 onclick="seleccionar('${op}',this)">
-<p>${op}</p>
+
+<p style="font-size:32px;">
+$${op}
+</p>
+
 </div>
+
 `).join("")}
+
 </div>
+
 </div>
 `;
 
 }
 
 }
+
+/* SELECCIONAR */
 
 function seleccionar(valor,elemento){
 
@@ -202,73 +248,99 @@ document
 .querySelectorAll(".producto")
 .forEach(p=>{
 
-p.style.border="2px solid cyan";
+p.style.border =
+"2px solid cyan";
 
 });
 
-elemento.style.border=
+elemento.style.border =
 "4px solid lime";
 
 }
 
+/* VERIFICAR */
+
 document
 .getElementById("verificar")
-.addEventListener("click",()=>{
+.addEventListener(
+"click",
+()=>{
 
-if(seleccion==="") return;
+if(seleccion === ""){
+return;
+}
 
-const actual = misiones[mision];
+const m =
+misiones[misionActual];
 
-if(seleccion===actual.correcta){
+if(
+seleccion ===
+m.correcta
+){
 
-puntaje+=20;
+puntaje += 20;
 
 localStorage.setItem(
 "puntaje",
 puntaje
 );
 
-puntajeDiv.textContent=
-"⭐ "+puntaje;
+puntajeDiv.textContent =
+"⭐ " + puntaje;
 
-mensaje.textContent=
+mensaje.textContent =
 "🎉 ¡Correcto!";
 
-mensaje.className=
+mensaje.className =
 "correcto";
 
+correcto.currentTime = 0;
 correcto.play();
 
 confetti({
+
 particleCount:200,
+
 spread:150
+
 });
 
-mision++;
+misionActual++;
 
 const porcentaje =
-(mision/5)*100;
 
-progreso.style.width=
-porcentaje+"%";
+(misionActual /
+misiones.length)
 
-carrito.style.left=
-`calc(${porcentaje}% - 30px)`;
+* 100;
 
-if(mision===5){
+progreso.style.width =
+porcentaje + "%";
+
+carritoBarra.style.left =
+`calc(${porcentaje}% - 20px)`;
+
+if(
+misionActual >=
+misiones.length
+){
+
+mensaje.textContent =
+"🏆 ¡Supermercado completado!";
 
 document
-.getElementById("btnFinal")
-.style.display=
+.getElementById(
+"btnFinal"
+)
+.style.display =
 "inline-block";
 
 document
-.getElementById("verificar")
-.style.display=
+.getElementById(
+"verificar"
+)
+.style.display =
 "none";
-
-mensaje.textContent=
-"🏆 ¡Supermercado completado!";
 
 return;
 
@@ -279,23 +351,33 @@ cargarMision,
 1200
 );
 
-}else{
+}
+else{
 
 vidas--;
 
-vidasDiv.textContent=
-"❤️".repeat(vidas)+
-"🤍".repeat(3-vidas);
+vidasDiv.textContent =
 
-mensaje.textContent=
+"❤️".repeat(vidas)
+
++
+
+"🤍".repeat(
+3 - vidas
+);
+
+mensaje.textContent =
 "❌ Incorrecto";
 
-mensaje.className=
+mensaje.className =
 "incorrecto";
 
+incorrecto.currentTime = 0;
 incorrecto.play();
 
-if(vidas<=0){
+if(
+vidas <= 0
+){
 
 alert(
 "Te quedaste sin vidas"
@@ -309,11 +391,17 @@ location.reload();
 
 });
 
-document
-.getElementById("btnFinal")
-.addEventListener("click",()=>{
+/* FINAL */
 
-window.location.href=
+document
+.getElementById(
+"btnFinal"
+)
+.addEventListener(
+"click",
+()=>{
+
+window.location.href =
 "final.html";
 
 });

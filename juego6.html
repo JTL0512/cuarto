@@ -5,7 +5,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Juego 6 - Supermercado Matemático</title>
+<title>🛒 Supermercado Matemático</title>
 
 <link rel="stylesheet" href="css/juego6.css">
 
@@ -37,6 +37,8 @@ src="img/carrito.png">
 
 <div id="pantallaInicio">
 
+<div class="inicioCard">
+
 <h1>🛒 Supermercado Matemático</h1>
 
 <p>
@@ -46,7 +48,8 @@ Acompáñame en esta aventura dentro del supermercado.
 Resolverás desafíos matemáticos usando precios,
 sumas, restas y comparaciones.
 
-¡Llena tu carrito y completa todas las misiones!
+Ayuda a tu familia a comprar correctamente
+y completa todas las misiones para llenar tu carrito.
 
 </p>
 
@@ -58,7 +61,9 @@ sumas, restas y comparaciones.
 
 </div>
 
-<div id="juego" style="display:none;">
+</div>
+
+<div id="juego">
 
 <h2 id="tituloMision">
 
@@ -66,9 +71,13 @@ Misión 1
 
 </h2>
 
-<div id="contenidoMision"></div>
+<div id="contenidoMision">
 
-<div id="mensaje"></div>
+</div>
+
+<div id="mensaje">
+
+</div>
 
 <button id="verificar">
 
@@ -78,13 +87,14 @@ Misión 1
 
 <button id="btnFinal">
 
-🏆 Finalizar Juego
+🏆 Ir al Final
 
 </button>
 
 </div>
 
 <audio id="correcto" src="sonidos/correcto.mp3"></audio>
+
 <audio id="incorrecto" src="sonidos/incorrecto.mp3"></audio>
 
 <script src="js/juego6.js"></script>
