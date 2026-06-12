@@ -339,14 +339,18 @@ misiones.length
 ){
 
 mensaje.textContent =
-"🏆 ¡Supermercado completado!";
+"🏆 ¡Felicitaciones! Has completado el Supermercado Matemático.";
 
-document
-.getElementById(
-"btnFinal"
-)
-.style.display =
-"inline-block";
+mensaje.className =
+"correcto";
+
+confetti({
+
+particleCount:300,
+
+spread:180
+
+});
 
 document
 .getElementById(
@@ -354,6 +358,13 @@ document
 )
 .style.display =
 "none";
+
+setTimeout(()=>{
+
+window.location.href =
+"final.html";
+
+},2500);
 
 return;
 
@@ -404,19 +415,6 @@ location.reload();
 
 });
 
-/* FINAL */
-document
-.getElementById(
-"btnFinal"
-)
-.addEventListener(
-"click",
-()=>{
-
-window.location.href =
-"final.html";
-
-});
 
 window.addEventListener(
 "load",
