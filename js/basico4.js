@@ -67,3 +67,49 @@ function audioDivision(){
     );
 
 }
+
+const btnContinuar =
+document.getElementById(
+"btnContinuar"
+);
+
+if(btnContinuar){
+
+btnContinuar.style.display =
+"none";
+
+window.addEventListener(
+"load",
+()=>{
+
+const voz =
+new SpeechSynthesisUtterance(
+
+"Hola " +
+localStorage.getItem("nombre") +
+". Bienvenido. Aquí aprenderás los contenidos necesarios antes de comenzar los desafíos matemáticos."
+
+);
+
+voz.lang =
+"es-ES";
+
+voz.rate =
+0.95;
+
+voz.onend = ()=>{
+
+btnContinuar.style.display =
+"inline-block";
+
+};
+
+speechSynthesis.cancel();
+
+speechSynthesis.speak(
+voz
+);
+
+});
+
+}

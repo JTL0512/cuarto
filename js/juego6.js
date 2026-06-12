@@ -44,18 +44,35 @@ vidasDiv.textContent =
 
 /* VOZ */
 
-function hablar(texto){
+function hablarBienvenida(){
 
 speechSynthesis.cancel();
 
 const voz =
-new SpeechSynthesisUtterance(texto);
+new SpeechSynthesisUtterance(
+
+"Bienvenido al supermercado matemático. Acompáñame en esta aventura dentro del supermercado. Resolverás desafíos matemáticos usando precios, sumas, restas y comparaciones. Ayuda a tu familia a comprar correctamente y completa todas las misiones para llenar tu carrito."
+
+);
 
 voz.lang = "es-CL";
 
 voz.rate = 0.95;
 
-speechSynthesis.speak(voz);
+voz.pitch = 1;
+
+voz.onend = ()=>{
+
+document.getElementById(
+"btnComenzar"
+).style.display =
+"inline-block";
+
+};
+
+speechSynthesis.speak(
+voz
+);
 
 }
 
@@ -151,10 +168,6 @@ document.getElementById(
 document.getElementById(
 "juego"
 ).style.display="block";
-
-hablar(
-"Acompáñame en esta aventura dentro del supermercado. Resuelve todas las misiones matemáticas para completar el juego."
-);
 
 cargarMision();
 
@@ -393,15 +406,19 @@ location.reload();
 
 /* FINAL */
 
-document
-.getElementById(
-"btnFinal"
-)
-.addEventListener(
-"click",
+window.addEventListener(
+"load",
 ()=>{
 
-window.location.href =
-"final.html";
+document.getElementById(
+"btnComenzar"
+).style.display =
+"none";
+
+setTimeout(()=>{
+
+hablarBienvenida();
+
+},1000);
 
 });

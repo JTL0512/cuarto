@@ -256,6 +256,12 @@ transition:.3s;
 
 }
 
+#btnComenzar{
+
+display:none;
+
+}
+
 #btnComenzar:hover,
 #verificar:hover,
 #btnFinal:hover{

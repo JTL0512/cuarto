@@ -140,7 +140,7 @@ btnEntrar.addEventListener("click",()=>{
     );
 
     hablar(
-    "Excelente. Comencemos la aventura matemática."
+    "Bien hecho."
     );
 
     setTimeout(()=>{

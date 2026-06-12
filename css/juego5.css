@@ -188,3 +188,26 @@ transform:scale(1.05);
 #btnFinal{
 display:none;
 }
+
+#btnSiguiente{
+
+background:
+linear-gradient(
+45deg,
+#00e5ff,
+#7c4dff
+);
+
+box-shadow:
+0 0 20px cyan,
+0 0 40px cyan;
+
+font-size:24px;
+
+font-weight:bold;
+
+padding:18px 40px;
+
+border-radius:20px;
+
+}
